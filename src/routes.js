@@ -1,20 +1,16 @@
 const express = require("express");
 const routes = express.Router();
+const ProfileController = require("./controllers/ProfileController");
+const JobController = require("./controllers/JobController");
+const DashBoardController = require("./controllers/DashboardController");
 
-const views = __dirname + "/views/";
-
-const profile = {
-  name: "Willian",
-  avatar: "https://avatars.githubusercontent.com/u/54725745?v=4",
-  "monthly-budget": 3000,
-  "days-per-week": 5,
-  "hours-per-day": 5,
-  "vacation-per-year": 4
-}
-
-routes.get('/', (req, res) => res.render(views + "index", { profile }));
-routes.get('/job', (req, res) => res.render(views + "job"));
-routes.get('/job/edit', (req, res) => res.render(views + "job-edit"));
-routes.get('/profile', (req, res) => res.render(views + "profile", { profile }));
+routes.get('/', DashBoardController.index);
+routes.get('/job', JobController.create);
+routes.post('/job', JobController.save)
+routes.get('/job/:id', JobController.show);
+routes.post('/job/:id', JobController.update);
+routes.post('/job/delete/:id', JobController.delete);
+routes.get('/profile', ProfileController.index);
+routes.post('/profile', ProfileController.update);
 
 module.exports = routes;
